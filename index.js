@@ -21,6 +21,7 @@ let catStatus = document.querySelector("#http-status");
 async function analyzeText(text) {   
     let respons;  
     let data;   
+    let timeToLoadSec;
     const resultObject = {}; 
     // =============== specific error handle ====================
     // if(text.trim() === ''){
@@ -32,7 +33,10 @@ async function analyzeText(text) {
     //Loading...
     resultP.style.color = textColorByType("loading");
     loaderElement.style.display = 'block';
-    resultP.innerText = "Loading......";
+    resultP.innerText = "Loading......"; 
+    
+    //Gets time
+    timeToLoadSec = new Date().getTime()
 
     respons = await fetch(SENTIM_API_LINK, 
         {
@@ -44,6 +48,10 @@ async function analyzeText(text) {
             body: JSON.stringify({'text':text}),
         }
     )
+
+    // Calculate fetch time - 
+    timeToLoadSec = (new Date().getTime() - timeToLoadSec) / 1000;       
+
     // Gets info and insert into 'data'
     statusCatPhoto(respons.status);
 
@@ -62,6 +70,7 @@ async function analyzeText(text) {
     // Create returned object
     resultObject['type'] = data.result.type;
     resultObject['polarity'] = data.result.polarity;
+    resultObject['timeToLoadSec'] = timeToLoadSec;
     resultObject["error"] = "";
     
     return resultObject;        
@@ -78,7 +87,9 @@ async function onClickHandel(event){
         let analyzedObject = await analyzeText(textToAnalyze);
         if(analyzedObject.error === ""){            
             resultP.style.color = textColorByType(analyzedObject.type);
-            resultP.innerText = `The text type is: ${analyzedObject.type} \nAnd the polarity is equal to ${analyzedObject.polarity}`;           
+            resultP.innerText = `The text type is: ${analyzedObject.type} \n
+            And the polarity is equal to ${analyzedObject.polarity} \n
+            Time to fetch: ${analyzedObject.timeToLoadSec} seconds`;           
         }
         else{
             // Error             
@@ -110,7 +121,7 @@ function textColorByType(type){
         return "red";
     }
     else if(type === "positive"){
-        return "lightgreen";
+        return "green";
     }
     else{
         return "black"
