@@ -7,18 +7,24 @@
         <link rel="stylesheet" href="./style.css">
         <script src="./index.js" defer></script> 
     </head>
-    <body>
-        <div>
-            <p>Insert text for checking</p>
+    <body style="background-color:bisque">    
+        <div class="main-div">
+            <p class="center">Insert text for checking</p>
         </div>
-        <div>
-            <textarea id="userText"></textarea>
+        <div class="center">
+            <textarea id="userText" class="textbox"></textarea>
         </div>
-        <div>
-            <button type="button" id="submitButton">Submit</button>
+        <br>
+        <div class="center">
+            <button type="button" id="submitButton" class="button">Submit</button>
+            <button type="button" id="clearButton" class="button">Clear</button>
         </div>
-        <div>
-            <p id="resultP"></p>
+        <div class="center">
+            <p id="resultP"><div class="lds-dual-ring center-loader" style="display: none;" id="loader"></div></p>            
+        </div>
+        <div class="center">
+            <p class="status-cat-text">Get a status cat</p>
+            <img id="http-status" class="cat-status center" style="display: none;">
         </div>
     </body>  
      

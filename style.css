@@ -1,16 +1,68 @@
-.error{
-    font-size: 12px;
-    color:salmon;
+body {
+	margin-left: 0;
+    margin-right: 0;    
 }
-.positive{
-    color: lightgreen;
-    font-size: 16px;
+.lds-dual-ring {
+    display: inline-block;
+    width: 50px;
+    height: 50px;        
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color:blueviolet transparent blueviolet transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.main-div{
+    text-align: center;
+    font-size: 38px;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    width: 100%;
+    
 }
-.negative{
-    color: red;
-    font-size: 16px;
+.textbox{
+    width: 180px;
+    height: 240px;    
 }
-.neutral{
-    color:gray;
-    font-size: 16px;
+.center{
+    text-align: center;
 }
+.center-loader{
+    margin: auto;
+}
+.cat-status{
+    width: 300px;
+    height: 300px;
+    margin: auto;
+}
+.status-cat-text{
+    font-size: 18px;
+    color: cadetblue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.button{
+    border-radius: 10%;
+    background-color: violet;
+    color: white;
+    display: inline-block;
+    padding: 10px 10px;
+}
+.button:hover{
+    background-color:rebeccapurple;
+}
+  
