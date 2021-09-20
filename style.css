@@ -1,0 +1,16 @@
+.error{
+    font-size: 12px;
+    color:salmon;
+}
+.positive{
+    color: lightgreen;
+    font-size: 16px;
+}
+.negative{
+    color: red;
+    font-size: 16px;
+}
+.neutral{
+    color:gray;
+    font-size: 16px;
+}

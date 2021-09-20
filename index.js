@@ -1,50 +1,59 @@
 
 const SENTIM_API_LINK = "https://sentim-api.herokuapp.com/api/v1/";
 
-async function analyzeText(text) {
-    
-    const respons = await fetch(`https://sentim-api.herokuapp.com/api/v1/`, 
+async function analyzeText(text) {   
+    let respons;  
+    let data;   
+    const resultObject = {}; 
+    if(text.trim() === ''){
+        resultObject["error"] = "Error! => Text cant be space or 'no text' ";
+        return resultObject;   
+    }
+    respons = await fetch(`https://sentim-api.herokuapp.com/api/v1/`, 
         {
             headers: {
                 Accept: "application/json",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             method: "POST",
-            body: JSON.stringify({'text':text,}),
+            body: JSON.stringify({'text':text}),
         }
     )
     // Gets info and insert into 'data'
-    const data = await respons.json();   
+    data = await respons.json();       
     
-    // If error
-    let errorMassage = "";
+    
+    // If error    
     if(!respons.ok){
-        errorMassage = "Error! " + data.error
+        resultObject["error"] = "Error! => " + respons.error;
+        return resultObject;         
     }
 
     // Create returned object
-    const resultObject = {
-        type: data.result.type,
-        polarity: data.result.polarity,
-        error: errorMassage,
-    }
+    resultObject['type'] = data.result.type;
+    resultObject['polarity'] = data.result.polarity;
+    resultObject["error"] = "";
+    
     return resultObject;        
 }
 
+document.addEventListener("click", onClickHandel);
+let resultP = document.querySelector("#resultP");
 
-document.getElementById("submitButton").addEventListener("click", onClickHandel)
-
-
-function onClickHandel(){
-    let textToAnalyze = document.getElementsByName("userText").innerText
-    let analyzedObject = await analyzeText(textToAnalyze);
-    if(analyzedObject.error === ""){
-
-    }
-    else{
-        // Error
-        let resultP = document.getElementsById("resultP")
-        resultP.innerText = analyzedObject.error;
+async function onClickHandel(event){
+    let textToAnalyze = document.querySelector("#userText").value;
+    if(event.target.id === "submitButton")
+    {        
+        let analyzedObject = await analyzeText(textToAnalyze);
+        if(analyzedObject.error === ""){
+            console.log("worked"); 
+            resultP.innerText = `The text type is: ${analyzedObject.type} \nAnd the polarity is equal to ${analyzedObject.polarity}`;           
+        }
+        else{
+            // Error 
+            console.log("Error");           
+            resultP.innerText = analyzedObject.error;
+        }
     }
     
 }
