@@ -23,13 +23,7 @@ let root = document.querySelector(':root');
 async function analyzeText(text) {   
     let response;        
     let timeToLoadSec;
-    const resultObject = {}; 
-    // =============== specific error handle ====================
-    // if(text.trim() === ''){
-    //     resultObject["error"] = "Error! => Text cant be space or 'no text' ";
-    //     statusCatPhoto("500");
-    //     return resultObject;   
-    // }
+    const resultObject = {};     
 
     //Loading...
     resultP.style.color = textColorByType("loading");
@@ -40,6 +34,7 @@ async function analyzeText(text) {
     //Gets time
     timeToLoadSec = new Date().getTime()
 
+    // fetch API
     response = await fetch(SENTIM_API_LINK, 
         {
             headers: {
@@ -61,6 +56,7 @@ async function analyzeText(text) {
     loaderElement.style.display = 'none';
     resultP.innerText = "";
 
+    // Check errors
     if(!response.ok){              
         resultObject["error"] = "Error! Something went wrong => " + response.statusText;        
         return resultObject;         
@@ -106,6 +102,7 @@ async function onClickHandel(event){
     
 }
 
+// ===> {polaraty - int} Calculate the % of prograss bar and display <===
 function progressbarLength(polarity){
     if(polarity === 0){
         root.style.setProperty('--long', polarity + '%');
@@ -121,19 +118,23 @@ function progressbarLength(polarity){
     }
 }
 
+// ===> Clear screan <===
 function clear(){  
     resultP.innerText = "";
     document.querySelector("#userText").value = "";
     catStatus.style.display = 'none'; 
+    progressbar.style.display = "none";
     catStatus.src = "";   
 }
 
+// ===> Gets status - int - display cat photo <===
 async function statusCatPhoto(status){    
     let link = 'https://http.cat/'+status;
     catStatus.src = link;
     catStatus.style.display = "block";
 }
 
+// ===> Gets type - str - return text color <===
 function textColorByType(type){
     if(type === "neutral"){
         return "gray";
